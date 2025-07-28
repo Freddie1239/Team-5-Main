@@ -1,7 +1,7 @@
 import sqlite3
-import hashlib
+import hashlib # Used for password hashing
 
-# Create users table if it doesn't exist
+# Create users table 
 def init_db():
     conn = sqlite3.connect("mqtt_users.db")
     cursor = conn.cursor()
@@ -19,6 +19,7 @@ def init_db():
 def register():
     conn = sqlite3.connect("mqtt_users.db")
     cursor = conn.cursor()
+    # prompt user to input credentials
     username = input("Choose a username: ").strip()
     password = input("Choose a password: ").strip()
 
@@ -29,6 +30,7 @@ def register():
     hashed_pw = hashlib.sha256(password.encode()).hexdigest()
 
     try:
+        # Insert user into the database
         cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_pw))
         conn.commit()
         print(" Registration successful.\n")
@@ -50,7 +52,7 @@ def login():
     cursor.execute("SELECT password FROM users WHERE username = ?", (username,))
     result = cursor.fetchone()
     conn.close()
-
+   # Check if credentials match
     if result and hashed_pw == result[0]:
         print(f" Login successful. Welcome, {username}!\n")
         return True
