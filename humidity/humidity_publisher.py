@@ -1,4 +1,4 @@
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt # MQTT communication Library
 import time
 import random
 from humidity_auth import init_db, login, register
@@ -27,7 +27,7 @@ client.connect(broker, port, 60)
 
 print(" Publishing humidity data every 5 seconds...\n")
 
-# Send fake humidity data every 5 seconds
+# Send humidity data every 5 seconds
 try:
     while True:
         humidity = round(random.uniform(40, 70), 2)
